@@ -1,7 +1,7 @@
 // productsSlice.js
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import fetchAllProducts from "./ProductAPI";
+import {fetchAllProducts, fetchProductsByFilters} from "./ProductAPI";
 
 // Define the initial state
 const initialState = {
@@ -18,6 +18,15 @@ export const fetchAllProductsAsync = createAsyncThunk(
     return response.data;
   }
 );
+
+export const fetchProductsByFiltersAsync = createAsyncThunk(
+  "products/fetchProductsByFilters",
+  async (filter) => {
+    const response = await fetchProductsByFilters(filter);
+    return response.data;
+  }
+);
+
 
 // Create the products slice of the Redux store
 const productsSlice = createSlice({
@@ -36,7 +45,14 @@ const productsSlice = createSlice({
       .addCase(fetchAllProductsAsync.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
-      });
+      })
+      .addCase(fetchProductsByFiltersAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchProductsByFiltersAsync.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.products = action.payload;
+      })
   },
 });
 
