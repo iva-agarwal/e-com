@@ -13,6 +13,7 @@ import {
 } from "react-router-dom";
 import Checkout from './pages/Checkout'
 import ProductDetailPage from './pages/ProductDetailPage'
+
 const router = createBrowserRouter([
   {
     path: "/",

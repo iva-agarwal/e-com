@@ -1,45 +1,44 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { fetchCount } from './counterAPI';
+// productsSlice.js
 
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import fetchAllProducts from "./ProductAPI";
+
+// Define the initial state
 const initialState = {
-  value: 0,
-  status: 'idle',
+  products: [],
+  status: "idle",
+  error: null,
 };
 
-export const incrementAsync = createAsyncThunk(
-  'counter/fetchCount',
-  async (amount) => {
-    const response = await fetchCount(amount);
-    // The value we return becomes the `fulfilled` action payload
+// Define the async thunk for fetching products
+export const fetchAllProductsAsync = createAsyncThunk(
+  "products/fetchAllProducts",
+  async () => {
+    const response = await fetchAllProducts();
     return response.data;
   }
 );
 
-export const counterSlice = createSlice({
-  name: 'counter',
+// Create the products slice of the Redux store
+const productsSlice = createSlice({
+  name: "products",
   initialState,
-  
-  reducers: {
-    increment: (state) => {
-      state.value += 1;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(incrementAsync.pending, (state) => {
-        state.status = 'loading';
+      .addCase(fetchAllProductsAsync.pending, (state) => {
+        state.status = "loading";
       })
-      .addCase(incrementAsync.fulfilled, (state, action) => {
-        state.status = 'idle';
-        state.value += action.payload;
+      .addCase(fetchAllProductsAsync.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.products = action.payload;
+      })
+      .addCase(fetchAllProductsAsync.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
       });
   },
 });
 
-export const { increment} = counterSlice.actions;
-
-export const selectCount = (state) => state.counter.value;
-
-
-
-export default counterSlice.reducer;
+export default productsSlice.reducer;
+export const { } = productsSlice.actions;  // No actions defined in this example
