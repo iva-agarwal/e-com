@@ -21,13 +21,7 @@ const sortOptions = [
   { name: "Price: Low to High", sort: "price",order:'asc', current: false },
   { name: "Price: High to Low", sort: "price", order:'desc', current: false },
 ];
-const subCategories = [
-  { name: "Totes", href: "#" },
-  { name: "Backpacks", href: "#" },
-  { name: "Travel Bags", href: "#" },
-  { name: "Hip Bags", href: "#" },
-  { name: "Laptop Sleeves", href: "#" },
-];
+
 const filters = [
   {
     id: "category",
@@ -42,7 +36,7 @@ const filters = [
     ],
   },
   {
-    id: "brands",
+    id: "brand",
     name: "Brands",
     options: [
       { value: "Apple", label: "Apple", checked: false },
@@ -53,18 +47,6 @@ const filters = [
       { value: "Baking Food Items", label: "Baking Food Items", checked: false },
     ],
   },
-  // {
-  //   id: "size",
-  //   name: "Size",
-  //   options: [
-  //     { value: "2l", label: "2L", checked: false },
-  //     { value: "6l", label: "6L", checked: false },
-  //     { value: "12l", label: "12L", checked: false },
-  //     { value: "18l", label: "18L", checked: false },
-  //     { value: "20l", label: "20L", checked: false },
-  //     { value: "40l", label: "40L", checked: true },
-  //   ],
-  // },
 ];
 
 
@@ -80,7 +62,13 @@ export default function ProductList() {
   const[filter,setFilter]=useState({});
   
   const handleFilter=(e,section,option)=>{
-    const newFilter={...filter,[section.id]:option.value}
+    const newFilter={...filter}
+    if(e.target.checked){
+      newFilter[section.id]=option.value
+    }
+    else{
+      delete newFilter[section.id]
+    }
     setFilter(newFilter)
 
     dispatch(fetchProductsByFiltersAsync(newFilter))
@@ -150,19 +138,7 @@ export default function ProductList() {
                     {/* Filters */}
                     <form className="mt-4 border-t border-gray-200">
                       <h3 className="sr-only">Categories</h3>
-                      <ul
-                        role="list"
-                        className="px-2 py-3 font-medium text-gray-900"
-                      >
-                        {subCategories.map((category) => (
-                          <li key={category.name}>
-                            <a href={category.href} className="block px-2 py-3">
-                              {category.name}
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-
+              
                       {filters.map((section) => (
                         <Disclosure
                           as="div"
@@ -171,6 +147,7 @@ export default function ProductList() {
                         >
                           {({ open }) => (
                             <>
+                            
                               <h3 className="-mx-2 -my-3 flow-root">
                                 <Disclosure.Button className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
                                   <span className="font-medium text-gray-900">
@@ -204,6 +181,7 @@ export default function ProductList() {
                                         defaultValue={option.value}
                                         type="checkbox"
                                         defaultChecked={option.checked}
+                                        onChange={(e) => handleFilter(e, section, option)}
                                         className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                       />
                                       <label
@@ -257,22 +235,23 @@ export default function ProductList() {
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <div className="py-1">
                         {sortOptions.map((option) => (
-                          <Menu.Item key={option.name}>
-                            {({ active }) => (
-                              <p
-                            onClick={e=> handleSort(e,option)}
-                                className={classNames(
-                                  option.current
-                                    ? "font-medium text-gray-900"
-                                    : "text-gray-500",
-                                  active ? "bg-gray-100" : "",
-                                  "block px-4 py-2 text-sm"
-                                )}
-                              >
-                                {option.name}
-                              </p>
-                            )}
-                          </Menu.Item>
+                         <Menu.Item key={option.name}>
+                         {({ active }) => (
+                           <p
+                             onClick={(e) => handleSort(e, option)}
+                             className={classNames(
+                               option.current
+                                 ? "font-medium text-gray-900"
+                                 : "text-gray-500",
+                               active ? "bg-gray-100" : "",
+                               "block px-4 py-2 text-sm"
+                             )}
+                           >
+                             {option.name}
+                           </p>
+                         )}
+                       </Menu.Item>
+                       
                         ))}
                       </div>
                     </Menu.Items>
@@ -306,17 +285,6 @@ export default function ProductList() {
                 {/* Filters */}
                 <form className="hidden lg:block">
                   <h3 className="sr-only">Categories</h3>
-                  {/* <ul
-                    role="list"
-                    className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900"
-                  >
-                    {subCategories.map((category) => (
-                      <li key={category.name}>
-                        <a href={category.href}>{category.name}</a>
-                      </li>
-                    ))}
-                  </ul> */}
-
                   {filters.map((section) => (
                     <Disclosure
                       as="div"
@@ -358,7 +326,9 @@ export default function ProductList() {
                                     defaultValue={option.value}
                                     type="checkbox"
                                     defaultChecked={option.checked}
+
                                     onChange={e=>handleFilter(e,section,option)}
+
                                     className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                   />
                                   <label
@@ -427,7 +397,18 @@ export default function ProductList() {
               </div>
             </section>
           </main>
-          <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
+          <Pagination/>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+const Pagination = () => {
+  return (
+    <div>
+      <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
             <div className="flex flex-1 justify-between sm:hidden">
               <a
                 href="#"
@@ -485,24 +466,8 @@ export default function ProductList() {
                   <span className="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300 focus:outline-offset-0">
                     ...
                   </span>
-                  <a
-                    href="#"
-                    className="relative hidden items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 md:inline-flex"
-                  >
-                    8
-                  </a>
-                  <a
-                    href="#"
-                    className="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
-                  >
-                    9
-                  </a>
-                  <a
-                    href="#"
-                    className="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
-                  >
-                    10
-                  </a>
+        
+            
                   <a
                     href="#"
                     className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
@@ -514,8 +479,6 @@ export default function ProductList() {
               </div>
             </div>
           </div>
-        </div>
-      </div>
     </div>
-  );
+  )
 }
