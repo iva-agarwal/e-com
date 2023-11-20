@@ -1,13 +1,14 @@
 // productsSlice.js
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import {fetchAllProducts, fetchProductsByFilters} from "./ProductAPI";
+import {fetchAllProducts, fetchProductsByFilters, fetchProductById} from "./ProductAPI";
 
 // Define the initial state
 const initialState = {
   products: [],
   status: "idle",
   error: null,
+  selectedProduct:null
 };
 
 // Define the async thunk for fetching products
@@ -19,10 +20,18 @@ export const fetchAllProductsAsync = createAsyncThunk(
   }
 );
 
+export const fetchAllProductByIdAsync = createAsyncThunk(
+  "products/fetchAllProductById",
+  async (id) => {
+    const response = await fetchProductById(id);
+    return response.data;
+  }
+);
+
 export const fetchProductsByFiltersAsync = createAsyncThunk(
   "products/fetchProductsByFilters",
-  async (filter,sort) => {
-    const response = await fetchProductsByFilters(filter,sort);
+  async (filter,sort,pagination) => {
+    const response = await fetchProductsByFilters(filter,sort,pagination);
     return response.data;
   }
 );
@@ -53,8 +62,16 @@ const productsSlice = createSlice({
         state.status = "succeeded";
         state.products = action.payload;
       })
+      .addCase(fetchAllProductByIdAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchAllProductByIdAsync.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.selectedProduct = action.payload;
+      })
   },
 });
 
 export default productsSlice.reducer;
+export const selectProductById =(state) => state.products.selectedProduct;
 export const { } = productsSlice.actions;  // No actions defined in this example
