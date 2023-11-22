@@ -7,7 +7,7 @@ import {
   incrementAsync,
 
 } from './../features/cart/CartSlice';
-import {selectCount} from '../features/cart/CartSlice'
+
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import {
@@ -58,7 +58,7 @@ const products = [
 ]
 
 const Checkout = () => {
-    const count = useSelector(selectCount);
+  
     const dispatch = useDispatch();
     const [open, setOpen] = useState(true)
   return (

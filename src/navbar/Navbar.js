@@ -5,6 +5,8 @@ import { Bars3Icon, ShoppingCartIcon, XMarkIcon } from '@heroicons/react/24/outl
 import {
   Link,
 } from "react-router-dom";
+import { useSelector } from 'react-redux';
+import { selectItems } from '../features/cart/CartSlice';
 
 
 const navigation = [
@@ -20,6 +22,9 @@ function classNames(...classes) {
 }
 
 const Navbar = () => {
+
+  const items=useSelector(selectItems)
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -79,7 +84,7 @@ const Navbar = () => {
                 </button>
                 </Link>
                 <span className="inline-flex items-center  rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
-2
+{items.length}
       </span>
 
                 {/* Profile dropdown */}
@@ -127,12 +132,12 @@ const Navbar = () => {
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href="#"
+                          <Link
+                            to='/login'
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
                             Sign out
-                          </a>
+                          </Link>
                         )}
                       </Menu.Item>
                     </Menu.Items>
