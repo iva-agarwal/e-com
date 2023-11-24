@@ -1,72 +1,76 @@
 import React from 'react'
-import {Fragment, useState } from 'react';
+import { Link } from "react-router-dom";
+import { Fragment, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {
- 
-  increment,
-  incrementAsync,
+import { deleteItemFromCartAsync, selectItems, updateCartAsync } from '../features/cart/CartSlice';
+import { Navigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { selectLoggedInUser, updateUserAsync } from '../features/auth/authSlice';
+import { createOrderAsync, selectCurrentOrderStatus } from '../features/order/OrderSlice';
 
-} from './../features/cart/CartSlice';
 
-import { Dialog, Transition } from '@headlessui/react'
-import { XMarkIcon } from '@heroicons/react/24/outline'
-import {
-  Link,
-} from "react-router-dom";
-const addresses=[
-  {
-    name:'John',
-    street:'11th Main',
-    city:'Delhi',
-    pinCode:'123456',
-    state:'Delhi',
-    phone:'123345667'
-  },
-  {
-    name:'John',
-    street:'11th Main',
-    city:'Delhi',
-    pinCode:'123456',
-    state:'Delhi',
-    phone:'123345667'
-  }
-]
-
-const products = [
-  {
-    id: 1,
-    name: 'Throwback Hip Bag',
-    href: '#',
-    color: 'Salmon',
-    price: '$90.00',
-    quantity: 1,
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg',
-    imageAlt: 'Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.',
-  },
-  {
-    id: 2,
-    name: 'Medium Stuff Satchel',
-    href: '#',
-    color: 'Blue',
-    price: '$32.00',
-    quantity: 1,
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
-    imageAlt:
-      'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
-  },
-  // More products...
-]
 
 const Checkout = () => {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  const dispatch = useDispatch();
+  const [open, setOpen] = useState(true);
+  const items = useSelector(selectItems);
+  const totalAmount=items.reduce((amount,item)=>item.price*item.quantity+amount,0)
+  const totalItems=items.reduce((total,item)=>item.quantity+total,0)
+  const orderPlaced=useSelector(selectCurrentOrderStatus)
   
-    const dispatch = useDispatch();
-    const [open, setOpen] = useState(true)
+  const handleQuantity=(e, item)=>{
+    dispatch( updateCartAsync({...item,quantity: +e.target.value}))
+  }
+  const handleRemove=(e,id)=>{
+    dispatch(deleteItemFromCartAsync(id))
+  }
+const user=useSelector(selectLoggedInUser);
+
+const handleAddress=(e)=>{
+  setSelectedAddress(user.addresses[e.target.value])
+}
+
+const handlePayment=(e)=>{
+  setPaymentMethod(e.target.value)
+}
+const handleOrder=(e)=>{
+  const order={items, 
+    totalAmount,
+    totalItems, 
+    user,
+    paymentMethod, 
+    selectedAddress,
+    status:'pending'
+  }
+  dispatch(createOrderAsync(order))
+}
+
+  const[selectedAddress, setSelectedAddress]= useState(nulll)
+  const[paymentMethod, setPaymentMethod]= useState('cash')
+
+
   return (
+    <div>
+    {!items.length && <Navigate to='/' replace={true}></Navigate>}
+
     <div className="mx-auto mt-12 max-w-7xl px-2 sm:px-6 lg:px-8">
 
     <div className="mt-0 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-5 xl:gap-x-8">
         <div className='lg:col-span-3'>
-        <form>
+        <form 
+        noValidate 
+        onSubmit={handleSubmit((data)=>{
+         dispatch(updateUserAsync({...user,addresses:[...user.addresses,data]})
+         )
+         reset();
+})}>
       <div className="space-y-12">
 
         <div className="border-b border-gray-900/10 pb-12">
@@ -75,30 +79,15 @@ const Checkout = () => {
 
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-3">
-              <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
-                First name
+              <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
+                Full name
               </label>
               <div className="mt-2">
                 <input
                   type="text"
-                  name="first-name"
-                  id="first-name"
-                  autoComplete="given-name"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-
-            <div className="sm:col-span-3">
-              <label htmlFor="last-name" className="block text-sm font-medium leading-6 text-gray-900">
-                Last name
-              </label>
-              <div className="mt-2">
-                <input
-                  type="text"
-                  name="last-name"
-                  id="last-name"
-                  autoComplete="family-name"
+                 {...register('name',{required:'name is required'})}
+                  id="name"
+                  
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -111,42 +100,40 @@ const Checkout = () => {
               <div className="mt-2">
                 <input
                   id="email"
-                  name="email"
+                  {...register('email',{required:'email is required'})}
                   type="email"
-                  autoComplete="email"
+                 
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
 
             <div className="sm:col-span-3">
-              <label htmlFor="country" className="block text-sm font-medium leading-6 text-gray-900">
-                Country
+              <label htmlFor="phone" className="block text-sm font-medium leading-6 text-gray-900">
+                Phone
+                
               </label>
               <div className="mt-2">
-                <select
-                  id="country"
-                  name="country"
-                  autoComplete="country-name"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                >
-                  <option>United States</option>
-                  <option>Canada</option>
-                  <option>Mexico</option>
-                </select>
+              <input
+                  id="phone"
+                  {...register('phone',{required:'phone is required'})}
+                  type="tel"
+                 
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
               </div>
             </div>
 
             <div className="col-span-full">
-              <label htmlFor="street-address" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="street" className="block text-sm font-medium leading-6 text-gray-900">
                 Street address
               </label>
               <div className="mt-2">
                 <input
                   type="text"
-                  name="street-address"
-                  id="street-address"
-                  autoComplete="street-address"
+                  {...register('street',{required:'street is required'})}
+                  id="street"
+  
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -159,39 +146,37 @@ const Checkout = () => {
               <div className="mt-2">
                 <input
                   type="text"
-                  name="city"
+                  {...register('city',{required:'city is required'})}
                   id="city"
-                  autoComplete="address-level2"
+                 
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
 
             <div className="sm:col-span-2">
-              <label htmlFor="region" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="state" className="block text-sm font-medium leading-6 text-gray-900">
                 State / Province
               </label>
               <div className="mt-2">
                 <input
                   type="text"
-                  name="region"
-                  id="region"
-                  autoComplete="address-level1"
+                  {...register('state',{required:'state is required'})}
+                  id="state"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
 
             <div className="sm:col-span-2">
-              <label htmlFor="postal-code" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="pinCode" className="block text-sm font-medium leading-6 text-gray-900">
                 ZIP / Postal code
               </label>
               <div className="mt-2">
                 <input
                   type="text"
-                  name="postal-code"
-                  id="postal-code"
-                  autoComplete="postal-code"
+                  {...register('pinCode',{required:'pinCode is required'})}
+                  id="pinCode"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -216,14 +201,16 @@ const Checkout = () => {
           <p className="mt-1 text-sm leading-6 text-gray-600">
 Choose from existing address          </p>
 <ul role="list" className="divide-y divide-gray-100">
-      {addresses.map((address) => (
-        <li key={address.name} className="flex justify-between gap-x-6 py-5">
+      {user.addresses.map((address,index) => (
+        <li key={index} className="flex justify-between gap-x-6 py-5">
           
           <div className="flex min-w-0 gap-x-4">
           <input
+          onChange={handleAddress}
                     id="address"
                     name="address"
                     type="radio"
+                    value={index}
                     className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                   />
             <div className="min-w-0 flex-auto">
@@ -245,13 +232,16 @@ Choose from existing address          </p>
            
             <fieldset>
               <legend className="text-sm font-semibold leading-6 text-gray-900">Payment methods</legend>
-              <p className="mt-1 text-sm leading-6 text-gray-600">These are delivered via SMS to your mobile phone.</p>
+              <p className="mt-1 text-sm leading-6 text-gray-600">Choose one</p>
               <div className="mt-6 space-y-6">
                 <div className="flex items-center gap-x-3">
                   <input
                     id="cash"
                     name="payments"
+                    onChange={handlePayment}
+                    value='cash'
                     type="radio"
+                    checked={paymentMethod==='cash'}
                     className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                   />
                   <label htmlFor="cash" className="block text-sm font-medium leading-6 text-gray-900">
@@ -261,6 +251,9 @@ Choose from existing address          </p>
                 <div className="flex items-center gap-x-3">
                   <input
                     id="card"
+                    onChange={handlePayment}
+                    value='card'
+                    checked={paymentMethod==='card'}
                     name="payments"
                     type="radio"
                     className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
@@ -277,92 +270,97 @@ Card Payments                  </label>
     </form>
     </div>
     <div className='lg:col-span-2'>
-    <div className="mx-auto mt-12 max-w-7xl px-2 sm:px-6 lg:px-8">
-<h2 className='text-3xl'>Cart</h2>
-                <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
+      <div className="mx-auto mt-12 max-w-7xl px-2 sm:px-6 lg:px-8">
+        <h2 className='text-3xl'>Cart</h2>
+        <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
+          <div className="flow-root">
+            <ul role="list" className="-my-6 divide-y divide-gray-200">
+              {items.map((item) => (
+                <li key={item.id} className="flex py-6">
+                  <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                    <img
+                      src={item.thumbnail} // Make sure 'thumbnail' is the correct property
+                      alt={item.title} // Make sure 'title' is the correct property
+                      className="h-full w-full object-cover object-center"
+                    />
+                  </div>
 
-                        <div className="flow-root">
-                          <ul role="list" className="-my-6 divide-y divide-gray-200">
-                            {products.map((product) => (
-                              <li key={product.id} className="flex py-6">
-                                <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                  <img
-                                    src={product.imageSrc}
-                                    alt={product.imageAlt}
-                                    className="h-full w-full object-cover object-center"
-                                  />
-                                </div>
-
-                                <div className="ml-4 flex flex-1 flex-col">
-                                  <div>
-                                    <div className="flex justify-between text-base font-medium text-gray-900">
-                                      <h3>
-                                        <a href={product.href}>{product.name}</a>
-                                      </h3>
-                                      <p className="ml-4">{product.price}</p>
-                                    </div>
-                                    <p className="mt-1 text-sm text-gray-500">{product.color}</p>
-                                  </div>
-                                  <div className="flex flex-1 items-end justify-between text-sm">
-                                    <div className="text-gray-500">Qty
-                                    <select>
-                                      <option value='1'>1</option>
-                                      <option value='1'>2</option>
-
-                                    </select>
-                                   </div>
-
-                                    <div className="flex">
-                                      <button
-                                        type="button"
-                                        className="font-medium text-indigo-600 hover:text-indigo-500"
-                                      >
-                                        Remove
-                                      </button>
-                                    </div>
-                                  </div>
-                                </div>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-                      <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
+                  <div className="ml-4 flex flex-1 flex-col">
+                    <div>
                       <div className="flex justify-between text-base font-medium text-gray-900">
-                        <p>Subtotal</p>
-                        <p>$262.00</p>
+                        <h3>
+                          <a href={item.href}>{item.title}</a>
+                        </h3>
+                        <p className="ml-4">${item.price}</p>
                       </div>
-                      <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
-                      <div className="mt-6">
-                        <Link
-                          to='/pay'
-                          className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                      <p className="mt-1 text-sm text-gray-500">{item.brand}</p>
+                    </div>
+                    <div className="flex flex-1 items-end justify-between text-sm">
+                      <div className="text-gray-500">Qty
+                        <select onChange={(e)=>handleQuantity(e,item)}>
+                          <option value='1'>1</option>
+                          <option value='2'>2</option>
+                          <option value='3'>3</option>
+                          <option value='4'>4</option>
+                          <option value='5'>5</option>
+                        </select>
+                      </div>
+                      <div className="flex">
+                        <button
+                        onClick={(e)=>handleRemove(e,item.id)}
+                          type="button"
+                          className="font-medium text-indigo-600 hover:text-indigo-500"
                         >
-                          Pay Now
-                        </Link>
-                      </div>
-                      <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
-                        <p>
-                          or  
-                          <Link to='/'>
-                          <button
-                            type="button"
-                            className="font-medium text-indigo-600 hover:text-indigo-500 px-2"
-                            onClick={() => setOpen(false)}
-                          >
-                            Continue Shopping
-                            <span aria-hidden="true"> &rarr;</span>
-                          </button>
-                          </Link>
-                        </p>
+                          Remove
+                        </button>
                       </div>
                     </div>
-    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
+          <div className="flex justify-between text-base font-medium text-gray-900">
+            <p>Subtotal</p>
+            <p>{totalAmount}</p>
+          </div>
+          <div className="flex justify-between text-base font-medium text-gray-900">
+            <p>Items</p>
+            <p>{totalItems}</p>
+          </div>
+          <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
+          <div className="mt-6">
+            <div
+              onClick={handleOrder}
+              className="flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+            >
+              Order Now
+            </div>
+          </div>
+          <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
+            <p>
+              or
+              <Link to='/'>
+                <button
+                  type="button"
+                  className="font-medium text-indigo-600 hover:text-indigo-500"
+                  onClick={() => setOpen(false)}
+                >
+                  Continue Shopping
+                  <span aria-hidden="true"> &rarr;</span>
+                </button>
+              </Link>
+            </p>
+          </div>
+        </div>
+      </div>
 
     </div>
     </div>
     </div>
-    
+    </div>
   )
 }
 

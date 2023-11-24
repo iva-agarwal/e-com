@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { addToCart, fetchItemsByUserId } from './CartAPI';
+import { addToCart, deleteItemFromCart, fetchItemsByUserId , updateCart} from './CartAPI';
 
 const initialState = {
   status: 'idle',
@@ -24,15 +24,31 @@ export const fetchItemsByUserIdAsync = createAsyncThunk(
   }
 );
 
+export const updateCartAsync = createAsyncThunk(
+  'cart/updateCart',
+  async (update) => {
+    const response = await updateCart(update);
+    // The value we return becomes the `fulfilled` action payload
+    return response.data;
+  }
+);
+
+export const deleteItemFromCartAsync = createAsyncThunk(
+  'cart/deleteItemFromCart',
+  async (itemId) => {
+    const response = await deleteItemFromCart(itemId);
+    // The value we return becomes the `fulfilled` action payload
+    return response.data;
+  }
+);
+
+
 export const cartSlice = createSlice({
   name: 'cart',
   initialState,
 
   reducers: {
-    // You can add any other reducers as needed
-    // ...
-
-    // Update the addProductToCart reducer to handle adding complete product objects
+  
     addProductToCart: (state, action) => {
       const { product } = action.payload;
       const existingProduct = state.items.find((item) => item.id === product.id);
@@ -49,7 +65,6 @@ export const cartSlice = createSlice({
       })
       .addCase(addToCartAsync.fulfilled, (state, action) => {
         state.status = 'idle';
-        // Instead of pushing the ID, dispatch the addProductToCart action with the complete product
         state.items.push(action.payload);
       })
       .addCase(fetchItemsByUserIdAsync.pending, (state) => {
@@ -58,8 +73,24 @@ export const cartSlice = createSlice({
       .addCase(fetchItemsByUserIdAsync.fulfilled, (state, action) => {
         state.status = 'idle';
         state.items = action.payload;
-      });
-  },
+      })
+      .addCase(updateCartAsync.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(updateCartAsync.fulfilled, (state, action) => {
+        state.status = 'idle';
+        const index= state.items.findIndex(item=>item.id===action.payload.id)
+        state.items[index] = action.payload;
+      })
+      .addCase(deleteItemFromCartAsync.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(deleteItemFromCartAsync.fulfilled, (state, action) => {
+        state.status = 'idle';
+        const index= state.items.findIndex(item=>item.id===action.payload.id)
+        state.items.splice(index,1)
+  });
+}
 });
 
 export const { addProductToCart } = cartSlice.actions;
