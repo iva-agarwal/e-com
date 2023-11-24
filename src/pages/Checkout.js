@@ -6,7 +6,7 @@ import { deleteItemFromCartAsync, selectItems, updateCartAsync } from '../featur
 import { Navigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { selectLoggedInUser, updateUserAsync } from '../features/auth/authSlice';
-import { createOrderAsync, selectCurrentOrderStatus } from '../features/order/OrderSlice';
+import { createOrderAsync, selectCurrentOrder } from '../features/order/OrderSlice';
 
 
 
@@ -23,7 +23,7 @@ const Checkout = () => {
   const items = useSelector(selectItems);
   const totalAmount=items.reduce((amount,item)=>item.price*item.quantity+amount,0)
   const totalItems=items.reduce((total,item)=>item.quantity+total,0)
-  const orderPlaced=useSelector(selectCurrentOrderStatus)
+  const currentOrder=useSelector(selectCurrentOrder)
   
   const handleQuantity=(e, item)=>{
     dispatch( updateCartAsync({...item,quantity: +e.target.value}))
@@ -59,7 +59,7 @@ const handleOrder=(e)=>{
   return (
     <div>
     {!items.length && <Navigate to='/' replace={true}></Navigate>}
-
+    {currentOrder && <Navigate to={`/order-success/${currentOrder.id}`} replace={true}></Navigate>}
     <div className="mx-auto mt-12 max-w-7xl px-2 sm:px-6 lg:px-8">
 
     <div className="mt-0 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-5 xl:gap-x-8">

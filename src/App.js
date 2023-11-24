@@ -59,7 +59,7 @@ const router = createBrowserRouter([
        <PageNotFound />
   },
   {
-  path: "/order-success",
+  path: "/order-success/:id",
   element:
      <orderSuccess />
 },
