@@ -45,7 +45,7 @@ export default function ProductDetail() {
   const dispatch= useDispatch();
   const params= useParams();
 
-const handleCart=(e)=>{
+const handleCart=(e,product)=>{
   e.preventDefault();
   const newItem={...product,quantity:1,user:user.id}
   delete newItem['id']
@@ -253,13 +253,14 @@ useEffect(()=>{
                 </RadioGroup>
               </div>
 
-              <button
-               onClick={handleCart}
-                type="submit"
-                className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-              >
-                Add to cart
-              </button>
+            <button
+  onClick={(e) => handleCart(e, product)}
+  type="submit"
+  className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+>
+  Add to cart
+</button>
+
             </form>
           </div>
 

@@ -24,7 +24,10 @@ const Checkout = () => {
   const totalAmount=items.reduce((amount,item)=>item.price*item.quantity+amount,0)
   const totalItems=items.reduce((total,item)=>item.quantity+total,0)
   const currentOrder=useSelector(selectCurrentOrder)
-  
+  const[selectedAddress, setSelectedAddress]= useState(null)
+  const[paymentMethod, setPaymentMethod]= useState('cash')
+
+
   const handleQuantity=(e, item)=>{
     dispatch( updateCartAsync({...item,quantity: +e.target.value}))
   }
@@ -41,6 +44,7 @@ const handlePayment=(e)=>{
   setPaymentMethod(e.target.value)
 }
 const handleOrder=(e)=>{
+  console.log('user.addresses:', user.addresses); 
   const order={items, 
     totalAmount,
     totalItems, 
@@ -52,8 +56,10 @@ const handleOrder=(e)=>{
   dispatch(createOrderAsync(order))
 }
 
-  const[selectedAddress, setSelectedAddress]= useState(nulll)
-  const[paymentMethod, setPaymentMethod]= useState('cash')
+const addressList =
+user && user.addresses && Array.isArray(user.addresses)
+  ? user.addresses
+  : [];
 
 
   return (
@@ -201,7 +207,7 @@ const handleOrder=(e)=>{
           <p className="mt-1 text-sm leading-6 text-gray-600">
 Choose from existing address          </p>
 <ul role="list" className="divide-y divide-gray-100">
-      {user.addresses.map((address,index) => (
+      {addressList.map((address,index) => (
         <li key={index} className="flex justify-between gap-x-6 py-5">
           
           <div className="flex min-w-0 gap-x-4">

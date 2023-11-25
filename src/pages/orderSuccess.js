@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectLoggedInUser } from '../features/auth/authSlice'
 import { resetOrder } from '../features/order/OrderSlice'
 
-const orderSuccess = () => {
+const OrderSuccess = () => {
     const params= useParams()
     const dispatch=useDispatch()
     const user= useSelector(selectLoggedInUser)
@@ -36,4 +36,4 @@ const orderSuccess = () => {
   )
 }
 
-export default orderSuccess
+export default OrderSuccess
