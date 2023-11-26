@@ -37,7 +37,7 @@ function classNames(...classes) {
 
 
 
-export default function ProductDetail() {
+function ProductDetail() {
   const [selectedColor, setSelectedColor] = useState(colors[0])
   const [selectedSize, setSelectedSize] = useState(sizes[2])
   const user = useSelector(selectLoggedInUser)
@@ -46,6 +46,7 @@ export default function ProductDetail() {
   const params= useParams();
 
 const handleCart=(e,product)=>{
+  console.log('abcd')
   e.preventDefault();
   const newItem={...product,quantity:1,user:user.id}
   delete newItem['id']
@@ -301,3 +302,4 @@ useEffect(()=>{
     </div>
   )
 }
+export default ProductDetail;

@@ -4,7 +4,7 @@ export async function createOrder(order) {
     {
       method:'POST',
       body: JSON.stringify(order),
-      headers:{'content-type':'appliction/json'}
+      headers:{'content-type':'application/json'}
     })
     const data = await response.json();
     resolve({ data });

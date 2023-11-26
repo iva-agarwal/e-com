@@ -26,6 +26,7 @@ const Checkout = () => {
   const currentOrder=useSelector(selectCurrentOrder)
   const[selectedAddress, setSelectedAddress]= useState(null)
   const[paymentMethod, setPaymentMethod]= useState('cash')
+  const user=useSelector(selectLoggedInUser);
 
 
   const handleQuantity=(e, item)=>{
@@ -34,7 +35,6 @@ const Checkout = () => {
   const handleRemove=(e,id)=>{
     dispatch(deleteItemFromCartAsync(id))
   }
-const user=useSelector(selectLoggedInUser);
 
 const handleAddress=(e)=>{
   setSelectedAddress(user.addresses[e.target.value])
@@ -56,10 +56,6 @@ const handleOrder=(e)=>{
   dispatch(createOrderAsync(order))
 }
 
-const addressList =
-user && user.addresses && Array.isArray(user.addresses)
-  ? user.addresses
-  : [];
 
 
   return (
@@ -206,34 +202,39 @@ user && user.addresses && Array.isArray(user.addresses)
           <h2 className="text-base font-semibold leading-7 text-gray-900">Address</h2>
           <p className="mt-1 text-sm leading-6 text-gray-600">
 Choose from existing address          </p>
-<ul role="list" className="divide-y divide-gray-100">
-      {addressList.map((address,index) => (
-        <li key={index} className="flex justify-between gap-x-6 py-5">
-          
-          <div className="flex min-w-0 gap-x-4">
+
+{user && user.addresses && Array.isArray(user.addresses) && user.addresses.length > 0 ? (
+  <ul role="list" className="divide-y divide-gray-100">
+    {user.addresses.map((address, index) => (
+      <li key={address.email} className="flex justify-between gap-x-6 py-5">
+        <div className="flex min-w-0 gap-x-4">
           <input
-          onChange={handleAddress}
-                    id="address"
-                    name="address"
-                    type="radio"
-                    value={index}
-                    className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                  />
-            <div className="min-w-0 flex-auto">
-              <p className="text-sm font-semibold leading-6 text-gray-900">{address.name}</p>
-              <p className="mt-1 truncate text-xs leading-5 text-gray-500">{address.street}</p>
-              <p className="mt-1 truncate text-xs leading-5 text-gray-500">{address.pinCode}</p>
-
-            </div>
+            onChange={handleAddress}
+            id="address"
+            name="address"
+            type="radio"
+            className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+          />
+          <div className="min-w-0 flex-auto">
+            <p className="text-sm font-semibold leading-6 text-gray-900">{address.name}</p>
+            <p className="mt-1 truncate text-xs leading-5 text-gray-500">{address.street}</p>
+            <p className="mt-1 truncate text-xs leading-5 text-gray-500">{address.pinCode}</p>
           </div>
-          <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+        </div>
+        <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
           <p className="text-sm leading-6 text-gray-900">Phone:{address.phone}</p>
-            <p className="text-sm leading-6 text-gray-900">{address.city}</p>
+          <p className="text-sm leading-6 text-gray-900">{address.city}</p>
+        </div>
+      </li>
+    ))}
+  </ul>
+) : (
+  <div>
+  <p>No addresses available.</p>
+</div>
 
-          </div>
-        </li>
-      ))}
-    </ul>
+)}
+
           <div className="mt-10 space-y-10">
            
             <fieldset>

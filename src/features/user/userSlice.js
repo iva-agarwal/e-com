@@ -7,13 +7,18 @@ const initialState = {
 };
 
 export const fetchLoggedInUserOrdersAsync = createAsyncThunk(
-  'counter/fetchLoggedInUserOrders',
-  async (id) => {
-    const response = await fetchLoggedInUserOrders(id);
-    // The value we return becomes the `fulfilled` action payload
-    return response.data;
+  'user/fetchLoggedInUserOrders',
+  async () => {
+    try {
+      const response = await fetch('http://localhost:8080/orders');
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      throw error;
+    }
   }
 );
+
 
 export const userSlice = createSlice({
   name: 'counter',

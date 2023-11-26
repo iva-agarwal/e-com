@@ -14,6 +14,13 @@ const Login = () => {
   const dispatch = useDispatch(); 
   const error= useSelector(selectError);
   const user= useSelector(selectLoggedInUser)
+  const onSubmit = async (data) => {
+    try {
+      await dispatch(checkUserAsync(data));
+    } catch (error) {
+      console.error('Login failed:', error.message);
+    }
+  };
 
   return (
     <div>
@@ -33,11 +40,7 @@ const Login = () => {
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form noValidate 
-           onSubmit={handleSubmit((data)=>{
-            console.log('Form Data:', data);
-            dispatch(checkUserAsync({email:data.email,password:data.password}))
-            dispatch(setEmailAndPassword({ email: data.email, password: data.password }));
-           })}
+          onSubmit={handleSubmit(onSubmit)}
          
           className="space-y-6" action="#" method="POST">
             <div>

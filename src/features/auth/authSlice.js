@@ -55,14 +55,17 @@ export const checkUserAsync = createAsyncThunk(
         })
         .addCase(createUserAsync.fulfilled, (state, action) => {
           state.status = 'idle';
-          state.loggedInUser += action.payload;
+          state.loggedInUser = action.payload;
         })
         .addCase(checkUserAsync.pending, (state) => {
           state.status = 'loading';
         })
         .addCase(checkUserAsync.fulfilled, (state, action) => {
           state.status = 'idle';
-          state.loggedInUser += action.payload;
+          state.loggedInUser = action.payload;
+          state.error = null;
+          console.log('Login successful');
+
         })
         .addCase(checkUserAsync.rejected, (state, action) => {
           state.status = 'idle';
