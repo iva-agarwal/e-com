@@ -27,24 +27,26 @@ const filters = [
     id: "category",
     name: "Category",
     options: [
-      { value: "smartphones", label: "smartphones", checked: false },
-      { value: "laptops", label: "laptops", checked: false },
-      { value: "fragrences", label: "fragrences", checked: false },
-      { value: "skincare", label: "skincare", checked: false },
-      { value: "groceries", label: "groceries", checked: false },
-      { value: "home-decoration", label: "home-decoration", checked: false },
+      { value: "Apparel", label: "Apparel", checked: false },
+      { value: "Shirts (Hawaiian)", label: "Shirts (Hawaiian)", checked: false },
+      { value: "Stickers", label: "Stickers", checked: false },
+      { value: "Tote Bags", label: "Tote Bags", checked: false },
+      { value: "Sketchbooks", label: "Sketchbooks", checked: false }
     ],
   },
   {
-    id: "brand",
-    name: "Brands",
+    id: "anime",
+    name: "Anime",
     options: [
-      { value: "Apple", label: "Apple", checked: false },
-      { value: "Samsung", label: "Samsung", checked: false },
-      { value: "OPPO", label: "OPPO", checked: false },
-      { value: "Huawei", label: "Huawei", checked: false },
-      { value: "HP Pavilion", label: "HP Pavilion", checked: false },
-      { value: "Baking Food Items", label: "Baking Food Items", checked: false },
+      { value: "Jujutsu Kaisen", label: "Jujutsu Kaisen", checked: false },
+      { value: "One Piece", label: "One Piece", checked: false },
+      { value: "Gintama", label: "Gintama", checked: false },
+      { value: "Senpai's Collection", label: "Senpai's Collection", checked: false },
+      { value: "Demon Slayer", label: "Demon Slayer", checked: false },
+      { value: "Shinobi", label: "Shinobi", checked: false },
+      { value: "AOT", label: "AOT", checked: false },
+      { value: "My Neighbor Totoro", label: "My Neighbor Totoro", checked: false },
+      { value: "Haikyuu", label: "Haikyuu", checked: false },
     ],
   },
 ];
@@ -95,7 +97,6 @@ export default function ProductList() {
 
   return (
     <div>
-      <Navbar />
       <div className="bg-white">
         <div>
           {/* Mobile filter dialog */}
@@ -383,8 +384,7 @@ export default function ProductList() {
                                     </div>
                                   </h3>
                                   <p className="mt-1 text-sm text-gray-500">
-                                    <StarIcon className="w-6 h-6 inline"/>
-                                  <span className=" align-bottom "> {product.rating}</span> 
+                                  <span className=" align-bottom "> {product.anime}</span> 
                                   </p>
                                 </div>
                                 <p className="text-sm font-medium text-gray-900">

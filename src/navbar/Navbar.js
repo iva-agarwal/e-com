@@ -10,10 +10,7 @@ import { selectItems } from '../features/cart/CartSlice';
 
 
 const navigation = [
-  { name: 'Products', href: '#', current: true },
-  { name: 'Contact', href: '#', current: false },
-  { name: 'Shop', href: '#', current: false },
-  { name: 'Cart', href: '#', current: false },
+  { name: 'Products', href: '#', current: true }
 ]
 
 
