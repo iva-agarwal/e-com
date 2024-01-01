@@ -90,7 +90,7 @@ const handleOrder=(e)=>{
                  {...register('name',{required:'name is required'})}
                   id="name"
                   
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -105,7 +105,7 @@ const handleOrder=(e)=>{
                   {...register('email',{required:'email is required'})}
                   type="email"
                  
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -121,7 +121,7 @@ const handleOrder=(e)=>{
                   {...register('phone',{required:'phone is required'})}
                   type="tel"
                  
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -136,7 +136,7 @@ const handleOrder=(e)=>{
                   {...register('street',{required:'street is required'})}
                   id="street"
   
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -151,7 +151,7 @@ const handleOrder=(e)=>{
                   {...register('city',{required:'city is required'})}
                   id="city"
                  
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -165,7 +165,7 @@ const handleOrder=(e)=>{
                   type="text"
                   {...register('state',{required:'state is required'})}
                   id="state"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -179,7 +179,7 @@ const handleOrder=(e)=>{
                   type="text"
                   {...register('pinCode',{required:'pinCode is required'})}
                   id="pinCode"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -191,7 +191,7 @@ const handleOrder=(e)=>{
         </button>
         <button
           type="submit"
-          className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black-600"
         >
           Save Address
         </button>
@@ -213,7 +213,7 @@ Choose from existing address          </p>
             id="address"
             name="address"
             type="radio"
-            className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+            className="h-4 w-4 border-gray-300 text-black-600 focus:ring-black-600"
           />
           <div className="min-w-0 flex-auto">
             <p className="text-sm font-semibold leading-6 text-gray-900">{address.name}</p>
@@ -249,7 +249,7 @@ Choose from existing address          </p>
                     value='cash'
                     type="radio"
                     checked={paymentMethod==='cash'}
-                    className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                    className="h-4 w-4 border-gray-300 text-black-600 focus:ring-black-600"
                   />
                   <label htmlFor="cash" className="block text-sm font-medium leading-6 text-gray-900">
                     Cash
@@ -263,7 +263,7 @@ Choose from existing address          </p>
                     checked={paymentMethod==='card'}
                     name="payments"
                     type="radio"
-                    className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                    className="h-4 w-4 border-gray-300 text-black-600 focus:ring-black-600"
                   />
                   <label htmlFor="card" className="block text-sm font-medium leading-6 text-gray-900">
 Card Payments                  </label>
@@ -298,7 +298,7 @@ Card Payments                  </label>
                         <h3>
                           <a href={item.href}>{item.title}</a>
                         </h3>
-                        <p className="ml-4">${item.price}</p>
+                        <p className="ml-4">₹{item.price}</p>
                       </div>
                       <p className="mt-1 text-sm text-gray-500">{item.brand}</p>
                     </div>
@@ -316,7 +316,7 @@ Card Payments                  </label>
                         <button
                         onClick={(e)=>handleRemove(e,item.id)}
                           type="button"
-                          className="font-medium text-indigo-600 hover:text-indigo-500"
+                          className="font-medium text-black-600 hover:text-black-500"
                         >
                           Remove
                         </button>
@@ -331,7 +331,7 @@ Card Payments                  </label>
         <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
           <div className="flex justify-between text-base font-medium text-gray-900">
             <p>Subtotal</p>
-            <p>{totalAmount}</p>
+            <p>₹{totalAmount}</p>
           </div>
           <div className="flex justify-between text-base font-medium text-gray-900">
             <p>Items</p>
@@ -341,18 +341,18 @@ Card Payments                  </label>
           <div className="mt-6">
             <div
               onClick={handleOrder}
-              className="flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+              className="flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-black px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-black-700"
             >
               Order Now
             </div>
           </div>
           <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
             <p>
-              or
+              or &nbsp;
               <Link to='/'>
                 <button
                   type="button"
-                  className="font-medium text-indigo-600 hover:text-indigo-500"
+                  className="font-medium text-black-600 hover:text-black-500"
                   onClick={() => setOpen(false)}
                 >
                   Continue Shopping

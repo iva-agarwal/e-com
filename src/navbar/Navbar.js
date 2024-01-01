@@ -44,8 +44,8 @@ const Navbar = () => {
                 <div className="flex flex-shrink-0 items-center">
                 <Link to='/'>
                   <img
-                    className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                    className="h-9 w-auto"
+                    src="https://www.pngall.com/wp-content/uploads/13/Anime-Logo-PNG-Cutout.png"
                     alt="Your Company"
                   />
                   </Link>

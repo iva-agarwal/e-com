@@ -43,7 +43,7 @@ export default function Cart() {
                         <h3>
                           <a href={item.href}>{item.title}</a>
                         </h3>
-                        <p className="ml-4">${item.price}</p>
+                        <p className="ml-4">₹{item.price}</p>
                       </div>
                       <p className="mt-1 text-sm text-gray-500">{item.brand}</p>
                     </div>
@@ -61,7 +61,7 @@ export default function Cart() {
                         <button
                         onClick={(e)=>handleRemove(e,item.id)}
                           type="button"
-                          className="font-medium text-indigo-600 hover:text-indigo-500"
+                          className="font-medium text-black-600 hover:text-black-500"
                         >
                           Remove
                         </button>
@@ -76,7 +76,7 @@ export default function Cart() {
         <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
           <div className="flex justify-between text-base font-medium text-gray-900">
             <p>Subtotal</p>
-            <p>{totalAmount}</p>
+            <p>₹{totalAmount}</p>
           </div>
           <div className="flex justify-between text-base font-medium text-gray-900">
             <p>Items</p>
@@ -86,18 +86,18 @@ export default function Cart() {
           <div className="mt-6">
             <Link
               to='/checkout'
-              className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+              className="flex items-center justify-center rounded-md border border-transparent bg-black px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-black-700"
             >
               Checkout
             </Link>
           </div>
           <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
             <p>
-              or
+              or &nbsp;
               <Link to='/'>
                 <button
                   type="button"
-                  className="font-medium text-indigo-600 hover:text-indigo-500"
+                  className="font-medium text-black-600 hover:text-black-500"
                   onClick={() => setOpen(false)}
                 >
                   Continue Shopping

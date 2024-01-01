@@ -997,7 +997,7 @@
   "users": [
     {
       "email": "test@gmail.com",
-      "password": "Qwerty12",
+      "password": "Qwerty@12",
       "addresses": [
         {
           "name": "demo",
@@ -1012,49 +1012,108 @@
       "id": 1
     }
   ],
-  "cart": [
-    {
-      "title": "Sage Of Shadow Path (Oversize Drop-Shoulder)",
-      "category": "Apparel",
-      "anime": "Oversize",
-      "price": 949,
-      "thumbnail": "https://comicsense.b-cdn.net/storage/2023/03/naruto_sageofshadowpath_oversizetee_listing_hitanshi-2_comicsense.jpg",
-      "images": [
-        "https://comicsense.b-cdn.net/storage/2023/03/naruto_sageofshadowpath_oversizetee_listing_hitanshi-4_comicsense.jpg",
-        "https://comicsense.b-cdn.net/storage/2023/03/naruto_sageofshadowpath_oversizetee_listing_hitanshi-5_comicsense.jpg",
-        "https://comicsense.b-cdn.net/storage/2023/03/naruto_sageofshadowpath_oversizetee_listing_hitanshi-1_comicsense.jpg",
-        "https://comicsense.b-cdn.net/storage/2023/03/naruto_sageofshadowpath_oversizetee_listing_hitanshi-3_comicsense.jpg"
-      ],
-      "quantity": 1,
-      "user": 1,
-      "id": 1
-    }
-  ],
+  "cart": [],
   "orders": [
     {
       "items": [
         {
-          "title": "Lost in Paradise (Oversize Drop-Shoulder)",
+          "title": "Beast Breathing: Second Fang (Oversize Drop-Shoulder)",
           "category": "Apparel",
-          "anime": "Jujutsu Kaisen",
-          "price": 899,
-          "thumbnail": "https://comicsense.b-cdn.net/storage/2023/07/jjk_lostinparadise_tee_listing1_hitanshi.jpg",
+          "anime": "Drops",
+          "price": 849,
+          "thumbnail": "https://comicsense.b-cdn.net/storage/2023/03/demonslayer_innosuke_beastbreathingsecondfang_oversizetee_backandfront_listing_hitanshi_comicsense.jpg",
           "images": [
-            "https://comicsense.b-cdn.net/storage/2023/07/jjk_lostinparadise_tee_listing1_hitanshi.jpg",
-            "https://comicsense.b-cdn.net/storage/2023/07/jjk_lostinparadise_tee_listing3_hitanshi.jpg",
-            "https://comicsense.b-cdn.net/storage/2023/07/jjk_lostinparadise_tee_listing2_hitanshi.jpg",
-            "https://comicsense.b-cdn.net/storage/2023/07/jjk_lostinparadise_tee_listing1_hitanshi.jpg"
+            "https://comicsense.b-cdn.net/storage/2023/03/demonslayer_innosuke_beastbreathing_secondfang_oversizetee_listing_backcloseup_hitanshi_comicsense.jpg",
+            "https://comicsense.b-cdn.net/storage/2023/03/demonslayer_innosuke_beastbreathing_secondfang_oversizetee_listing_frontcloseup_hitanshi_comicsense.jpg",
+            "https://comicsense.b-cdn.net/storage/2023/03/demonslayer_innosuke_beastbreathing_secondfang_oversizetee_back_listing_hitanshi_comicsense.jpg",
+            "https://comicsense.b-cdn.net/storage/2023/03/demonslayer_innosuke_beastbreathing_secondfang_oversizetee_front_listing_hitanshi_comicsense.jpg"
+          ],
+          "description": [
+            "180 GSM, 100% Cotton, Colour Block, Pre-Shrunk & Bio-Washed Fabric",
+            "Screen Printed,",
+            " Oversize Fit",
+            " Colors may vary due to photography and your screen setting"
+          ],
+          "quantity": 2,
+          "user": 1,
+          "id": 1
+        },
+        {
+          "title": "Groovy Jujutsu Sorcerers Spiral Sketchbook",
+          "category": "Sketchbooks",
+          "anime": "Jujutsu Kaisen",
+          "price": 299,
+          "thumbnail": "https://comicsense.b-cdn.net/storage/2021/03/jujutsu_groovy_notebook_front_comicsense.jpg",
+          "images": [
+            "https://comicsense.b-cdn.net/storage/2021/03/jujutsu_groovy_notebook_front_comicsense.jpg",
+            "https://comicsense.b-cdn.net/storage/2021/03/jujutsu_groovy_notebook_back_comicsense.jpg",
+            "https://comicsense.b-cdn.net/storage/2021/03/spiral_notebook_blank_inside_pages_comicsense_118d08c1-fd57-4c7f-9c8a-4b922204a4f0.jpg",
+            "https://i.dummyjson.com/data/products/100/thumbnail.jpg"
+          ],
+          "description": [
+            " Size: A5 (8.25 x 5.8 inches)",
+            "Cover Type: 650 GSM; Laminated Hard Cover; Digital Printing",
+            "Page Type: 90 GSM; Both Side Blank; Offset Printing",
+            "No. of Pages: 60",
+            "Binding: Spiral Wire Bound"
           ],
           "quantity": 1,
           "user": 1,
-          "id": 2
+          "id": 3
         }
       ],
-      "totalAmount": 899,
+      "totalAmount": 1997,
+      "totalItems": 3,
+      "user": {
+        "email": "test@gmail.com",
+        "password": "Qwerty@12",
+        "addresses": [
+          {
+            "name": "demo",
+            "email": "test@gmail.com",
+            "phone": "1234568",
+            "street": "11th",
+            "city": "gurgaon",
+            "state": "haryana",
+            "pinCode": "334545"
+          }
+        ],
+        "id": 1
+      },
+      "paymentMethod": "card",
+      "status": "pending",
+      "id": 1
+    },
+    {
+      "items": [
+        {
+          "title": "Warrior of Liberation (Oversize Drop-Shoulder)",
+          "category": "Apparel",
+          "anime": "One Piece",
+          "price": 999,
+          "thumbnail": "https://comicsense.b-cdn.net/storage/2023/09/joyboy-neon-2.webp",
+          "images": [
+            "https://comicsense.b-cdn.net/storage/2023/09/onepiece_warriorofliberation_tee_listing2_hitanshi-scaled.jpg",
+            "https://comicsense.b-cdn.net/storage/2023/09/joyboy-neon-2.webp",
+            "https://comicsense.b-cdn.net/storage/2023/09/onepiece_warriorofliberation_tee_listing1_hitanshi-scaled.jpg",
+            "https://comicsense.b-cdn.net/storage/2023/09/onepiece_warriorofliberation_tee_listing1_hitanshi-scaled.jpg"
+          ],
+          "description": [
+            "180 GSM, 100% Cotton, Colour Block, Pre-Shrunk & Bio-Washed Fabric",
+            "Screen Printed,",
+            " Oversize Fit",
+            " Colors may vary due to photography and your screen setting"
+          ],
+          "quantity": 1,
+          "user": 1,
+          "id": 1
+        }
+      ],
+      "totalAmount": 999,
       "totalItems": 1,
       "user": {
         "email": "test@gmail.com",
-        "password": "Qwerty12",
+        "password": "Qwerty@12",
         "addresses": [
           {
             "name": "demo",

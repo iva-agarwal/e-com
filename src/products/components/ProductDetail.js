@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import {selectLoggedInUser} from '../../features/auth/authSlice'
 import { addToCartAsync } from '../../features/cart/CartSlice';
-
+import Notification from './Notification';
 const colors=[
   { name: 'White', class: 'bg-white', selectedClass: 'ring-gray-400' },
   { name: 'Gray', class: 'bg-gray-200', selectedClass: 'ring-gray-400' },
@@ -44,6 +44,7 @@ function ProductDetail() {
   const product=useSelector(selectProductById);
   const dispatch= useDispatch();
   const params= useParams();
+  const [showNotification, setShowNotification] = useState(false); // State to control whether to show the notification
 
 const handleCart=(e,product)=>{
   console.log('abcd')
@@ -51,6 +52,12 @@ const handleCart=(e,product)=>{
   const newItem={...product,quantity:1,user:user.id}
   delete newItem['id']
   dispatch(addToCartAsync(newItem))
+  setShowNotification(true);
+
+    // Hide the notification after a certain duration (e.g., 3 seconds)
+    setTimeout(() => {
+      setShowNotification(false);
+    }, 3000);
 }
 useEffect(()=>{
  
@@ -68,6 +75,7 @@ useEffect(()=>{
                   <a href={breadcrumb.href} className="mr-2 text-sm font-medium text-gray-900">
                     {breadcrumb.name}
                   </a>
+                  
                   <svg
                     width={16}
                     height={20}
@@ -112,8 +120,13 @@ useEffect(()=>{
           {/* Options */}
           <div className="mt-4 lg:row-span-3 lg:mt-0">
             <h2 className="sr-only">Product information</h2>
-            <p className="text-3xl tracking-tight text-gray-900">{product.price}</p>
-
+            <p className="text-3xl tracking-tight text-gray-900">₹{product.price}</p>
+  {/* Add Notification component */}
+  {showNotification && (
+        <div className="fixed bottom-0 left-0 right-0 bg-green-500 text-white p-4 text-center">
+          Product added to cart
+        </div>
+      )}
             {/* Reviews */}
             {/* <div className="mt-6">
               <h3 className="sr-only">Reviews</h3>
@@ -177,7 +190,7 @@ useEffect(()=>{
   <div className="mt-10">
     <div className="flex items-center justify-between">
       <h3 className="text-sm font-medium text-gray-900">Size</h3>
-      <a href="#" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+      <a href="#" className="text-sm font-medium text-black-600 hover:text-black-500">
         Size guide
       </a>
     </div>
@@ -195,7 +208,7 @@ useEffect(()=>{
                 size.inStock
                   ? 'cursor-pointer bg-white text-gray-900 shadow-sm'
                   : 'cursor-not-allowed bg-gray-50 text-gray-200',
-                active ? 'ring-2 ring-indigo-500' : '',
+                active ? 'ring-2 ring-black-500' : '',
                 'group relative flex items-center justify-center rounded-md border py-3 px-4 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6'
               )
             }
@@ -207,7 +220,7 @@ useEffect(()=>{
                   <span
                     className={classNames(
                       active ? 'border' : 'border-2',
-                      checked ? 'border-indigo-500' : 'border-transparent',
+                      checked ? 'border-black-500' : 'border-transparent',
                       'pointer-events-none absolute -inset-px rounded-md'
                     )}
                     aria-hidden="true"
@@ -239,7 +252,7 @@ useEffect(()=>{
   <div className="mt-10">
     <div className="flex items-center justify-between">
       <h3 className="text-sm font-medium text-gray-900">Size</h3>
-      <a href="#" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+      <a href="#" className="text-sm font-medium text-black-600 hover:text-black-500">
         Size guide
       </a>
     </div>
@@ -257,7 +270,7 @@ useEffect(()=>{
                 size.inStock
                   ? 'cursor-pointer bg-white text-gray-900 shadow-sm'
                   : 'cursor-not-allowed bg-gray-50 text-gray-200',
-                active ? 'ring-2 ring-indigo-500' : '',
+                active ? 'ring-2 ring-black-500' : '',
                 'group relative flex items-center justify-center rounded-md border py-3 px-4 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6'
               )
             }
@@ -269,7 +282,7 @@ useEffect(()=>{
                   <span
                     className={classNames(
                       active ? 'border' : 'border-2',
-                      checked ? 'border-indigo-500' : 'border-transparent',
+                      checked ? 'border-black-500' : 'border-transparent',
                       'pointer-events-none absolute -inset-px rounded-md'
                     )}
                     aria-hidden="true"
@@ -302,7 +315,7 @@ useEffect(()=>{
             <button
   onClick={(e) => handleCart(e, product)}
   type="submit"
-  className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+  className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-black px-8 py-3 text-base font-medium text-white hover:bg-black-200 focus:outline-none focus:ring-2 focus:ring-black-500 focus:ring-offset-2"
 >
   Add to cart
 </button>
